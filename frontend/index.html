@@ -1,0 +1,175 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>CheckMate</title>
+        
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Bootstrap Icons -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="container-fluid">
+            <!-- Header -->
+            <header class="header">
+                <h1 class="logo">CheckMate</h1>
+                <p class="tagline">Resume Analysis</p>
+            </header>
+
+            <div class="row g-3 g-lg-4">
+                <!-- Left Column: Input -->
+                <div class="col-lg-6">
+                    <div class="panel">
+                        <!-- PDF Upload -->
+                        <div class="input-group">
+                            <label for="resumeFile" class="label">
+                                <span class="label-text">Resume</span>
+                                <span class="label-hint">PDF only</span>
+                            </label>
+                            <div class="file-upload-wrapper">
+                                <input type="file" class="file-input" id="resumeFile" accept=".pdf" required>
+                                <label for="resumeFile" class="file-label">
+                                    <i class="bi bi-cloud-upload"></i>
+                                    <span class="file-text">Choose file</span>
+                                </label>
+                                <div id="fileInfo" class="file-info" style="display: none;">
+                                    <i class="bi bi-check-circle"></i>
+                                    <span id="fileName"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Job Description -->
+                        <div class="input-group">
+                            <label for="jobDescription" class="label">
+                                <span class="label-text">Job Description</span>
+                                <span class="label-hint">
+                                    <span id="charCount">0</span> / 50 min
+                                </span>
+                            </label>
+                            <textarea 
+                                class="textarea" 
+                                id="jobDescription" 
+                                rows="12" 
+                                placeholder="Paste job description..."
+                                required
+                            ></textarea>
+                        </div>
+
+                        <!-- Analyze Button -->
+                        <button 
+                            type="button" 
+                            class="btn-primary" 
+                            id="analyzeBtn"
+                            disabled
+                        >
+                            <i class="bi bi-activity"></i>
+                            <span>Analyze</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right Column: Results -->
+                <div class="col-lg-6">
+                    <!-- Placeholder -->
+                    <div class="panel placeholder" id="placeholderCard">
+                        <div class="placeholder-content">
+                            <div class="placeholder-icon">
+                                <i class="bi bi-graph-up"></i>
+                            </div>
+                            <p class="placeholder-text">Results will appear here</p>
+                        </div>
+                    </div>
+
+                    <!-- Results Card -->
+                    <div class="panel results" id="resultsCard" style="display: none;">
+                        <!-- Loading -->
+                        <div id="loadingSpinner" class="loading" style="display: none;">
+                            <div class="spinner"></div>
+                            <p class="loading-text">Analyzing...</p>
+                        </div>
+
+                        <!-- Results Content -->
+                        <div id="resultsContent">
+                            <!-- Match Score -->
+                            <div class="result-section">
+                                <div class="section-header">
+                                    <span class="section-title">Match Score</span>
+                                    <span class="section-value" id="matchScoreText">0%</span>
+                                </div>
+                                <div class="progress-wrapper">
+                                    <div class="progress-bar" id="matchScoreBar"></div>
+                                </div>
+                            </div>
+
+                            <!-- Summary -->
+                            <div class="result-section">
+                                <div class="section-header">
+                                    <span class="section-title">Summary</span>
+                                </div>
+                                <p class="summary-text" id="summaryText"></p>
+                            </div>
+
+                            <!-- Technical Gaps -->
+                            <div class="result-section">
+                                <div class="section-header">
+                                    <span class="section-title">Technical Gaps</span>
+                                </div>
+                                <ul class="gap-list" id="technicalGaps"></ul>
+                                <p class="no-gaps" id="noTechnicalGaps" style="display: none;">
+                                    <i class="bi bi-check-circle"></i> No gaps identified
+                                </p>
+                            </div>
+
+                            <!-- Soft Skills Gaps -->
+                            <div class="result-section">
+                                <div class="section-header">
+                                    <span class="section-title">Soft Skills Gaps</span>
+                                </div>
+                                <ul class="gap-list" id="softSkillsGaps"></ul>
+                                <p class="no-gaps" id="noSoftSkillsGaps" style="display: none;">
+                                    <i class="bi bi-check-circle"></i> No gaps identified
+                                </p>
+                            </div>
+
+                            <!-- Improvements -->
+                            <div class="result-section">
+                                <div class="section-header">
+                                    <span class="section-title">Improvements</span>
+                                </div>
+                                <ul class="improvement-list" id="improvedBullets"></ul>
+                            </div>
+
+                            <!-- Reset Button -->
+                            <button type="button" class="btn-secondary" id="resetBtn">
+                                <i class="bi bi-arrow-clockwise"></i>
+                                <span>Reset</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Error Toast -->
+        <div class="toast" id="errorToast" role="alert">
+            <div class="toast-content">
+                <i class="bi bi-exclamation-triangle"></i>
+                <span id="errorMessage"></span>
+            </div>
+        </div>
+
+        <!-- Bootstrap JS Bundle -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Custom JavaScript -->
+        <script src="script.js"></script>
+    </body>
+    </html>
