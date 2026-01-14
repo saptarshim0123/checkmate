@@ -12,7 +12,7 @@
         <!-- Google Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
         <!-- Custom CSS -->
         <link rel="stylesheet" href="style.css">
     </head>
@@ -20,7 +20,9 @@
         <div class="container-fluid">
             <!-- Header -->
             <header class="header">
-                <h1 class="logo">CheckMate</h1>
+                <h1 class="logo">
+                    <span class="logo-main">Check</span><span class="logo-accent">Mate</span>
+                </h1>
                 <p class="tagline">Resume Analysis</p>
             </header>
 
@@ -30,27 +32,31 @@
                     <div class="panel">
                         <!-- PDF Upload -->
                         <div class="input-group">
-                            <label for="resumeFile" class="label">
-                                <span class="label-text">Resume</span>
-                                <span class="label-hint">PDF only</span>
-                            </label>
-                            <div class="file-upload-wrapper">
-                                <input type="file" class="file-input" id="resumeFile" accept=".pdf" required>
-                                <label for="resumeFile" class="file-label">
-                                    <i class="bi bi-cloud-upload"></i>
-                                    <span class="file-text">Choose file</span>
-                                </label>
-                                <div id="fileInfo" class="file-info" style="display: none;">
-                                    <i class="bi bi-check-circle"></i>
-                                    <span id="fileName"></span>
+                            <div class="file-upload-container">
+                                <div class="file-label-section">
+                                    <label for="resumeFile" class="label-vertical">
+                                        <span class="label-text"><strong>Resume</strong></span>
+                                        <span class="label-hint">(PDF only)</span>
+                                    </label>
                                 </div>
+                                <div class="file-upload-wrapper">
+                                    <input type="file" class="file-input" id="resumeFile" accept=".pdf" required>
+                                    <label for="resumeFile" class="file-label">
+                                        <i class="bi bi-cloud-upload"></i>
+                                        <span class="file-text"><strong>Choose file</strong></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div id="fileInfo" class="file-info" style="display: none;">
+                                <i class="bi bi-check-circle"></i>
+                                <span id="fileName"></span>
                             </div>
                         </div>
 
                         <!-- Job Description -->
                         <div class="input-group">
                             <label for="jobDescription" class="label">
-                                <span class="label-text">Job Description</span>
+                                <span class="label-text"><strong>Job Description</strong></span>
                                 <span class="label-hint">
                                     <span id="charCount">0</span> / 50 min
                                 </span>
